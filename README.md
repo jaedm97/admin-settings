@@ -1,2 +1,2 @@
-# setting-press
-Create beautiful WordPress Plugin setting page using React, shadcdn UI, TypeScript easily and quickly.
+# Admin Settings Pages
+Create a beautiful WordPress plugin settings page with React, Shadcdn UI, and TypeScript, easily and quickly.
