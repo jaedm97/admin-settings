@@ -105,8 +105,8 @@ export default function App() {
             <div className="max-w-4xl mx-auto">
                 <div className="header flex items-center justify-between mb-6">
                     <div className="logo flex items-center justify-between">
-                        <img className="w-[200px]" src={pageSettingsData.logoUrl} alt="Plugin Logo"/>
-                        <span className="text-[12px]">{pageSettingsData.pluginVersion}</span>
+                        <img className="w-[200px] mr-2" src={pageSettingsData.logoUrl} alt="Plugin Logo"/>
+                        <span className="text-[12px]">Version: {pageSettingsData.pluginVersion}</span>
                     </div>
                     <div className="submit-button flex items-center justify-between">
                         {

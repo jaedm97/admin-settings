@@ -12,7 +12,7 @@ defined( 'PLUGIN_DIR' ) || define( 'PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'PLUGIN_URL' ) || define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 defined( 'PLUGIN_VERSION' ) || define( 'PLUGIN_VERSION', '1.0.0' );
 
-require_once PLUGIN_DIR . 'react-panel/react-panel.php';
+require_once PLUGIN_DIR . 'wp-react-panel/wp-react-panel.php';
 
 $page_data      = array(
 	'page_title' => 'My Settings Page',
@@ -497,6 +497,6 @@ $settings_data  = array(
 		),
 	),
 );
-$admin_settings = new ReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
+$admin_settings = new WPReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
 
 

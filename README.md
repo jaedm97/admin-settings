@@ -1,13 +1,13 @@
-# ReactPanel — WP React Admin Settings Builder
+# WPReactPanel — WP React Admin Settings Builder
 
 Create a beautiful WordPress plugin settings page with React, ShadCDN UI, and TypeScript, easily and quickly.
 
 ## Quick Start
 
-### 1. Include the ReactPanel Class
+### 1. Include the WPReactPanel Class
 
 ```php
-require_once PLUGIN_DIR . 'admin-settings/admin-settings.php';
+require_once PLUGIN_DIR . 'wp-react-panel/wp-react-panel.php';
 ```
 
 ### 2. Define Page Data
@@ -50,10 +50,10 @@ $settings_data = array(
 );
 ```
 
-### 4. Initialize ReactPanel
+### 4. Initialize WPReactPanel
 
 ```php
-$admin_settings = new ReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
+$admin_settings = new WPReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
 ```
 
 ## Supported Field Types
@@ -78,7 +78,7 @@ array(
 - `id` (required): Unique field identifier
 - `title` (required): Field label
 - `desc` (optional): Help text below the field
-- `type`: Must be `'text'`
+- `type`: Could be `'text'` `'number'` `'email'` `'password'` `'url'`
 - `placeholder` (optional): Placeholder text
 - `default` (optional): Default value
 - `value` (optional): Current value (typically from `get_option()`)
@@ -415,7 +415,7 @@ defined( 'PLUGIN_DIR' ) || define( 'PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'PLUGIN_URL' ) || define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 defined( 'PLUGIN_VERSION' ) || define( 'PLUGIN_VERSION', '1.0.0' );
 
-require_once PLUGIN_DIR . 'admin-settings/admin-settings.php';
+require_once PLUGIN_DIR . 'wp-react-panel/wp-react-panel.php';
 
 // Optional: Add field validation
 function admin_settings_validate_app_name( $field, $all_options ) {
@@ -468,7 +468,7 @@ $settings_data = array(
 );
 
 // Initialize the settings page
-$admin_settings = new ReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
+$admin_settings = new WPReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN_VERSION );
 ```
 
 ---
@@ -478,7 +478,7 @@ $admin_settings = new ReactPanel( $page_data, $settings_data, PLUGIN_URL, PLUGIN
 - All field values are automatically saved to WordPress options using `update_option()` with the field `id` as the option name
 - The settings page uses WordPress REST API for saving settings
 - Only users with the specified `capability` can access the settings page
-- The React frontend is built from `admin-settings/build/` directory
+- The React frontend is built from `wp-react-panel/build/` directory
 - Make sure to build the React application before using this class
 
 ---

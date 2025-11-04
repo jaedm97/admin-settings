@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 
-const rootElement = document.getElementById('admin-settings-root')
+const rootElement = document.getElementById('wp-react-panel-root')
 
 if (rootElement) {
     const root = ReactDOM.createRoot(rootElement)
@@ -13,5 +13,5 @@ if (rootElement) {
         </React.StrictMode>
     )
 } else {
-    console.error("Root element 'admin-settings-root' not found!")
+    console.error("Root element 'wp-react-panel-root' not found!")
 }
