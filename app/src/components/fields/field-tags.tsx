@@ -15,10 +15,13 @@ import {CheckIcon, PlusIcon} from 'lucide-react';
 import {useState} from 'react';
 
 const FieldTags = (field: { data: any; }) => {
-    let data = field.data,
-        defaultArgs = data.default ?? [],
-        defaultTags = defaultArgs.map((item: any) => ({id: item, label: item}));
+    let data = field.data;
 
+    const defaultArgs = data.value !== undefined
+        ? (Array.isArray(data.value) ? data.value : [])
+        : (Array.isArray(data.default) ? data.default : []);
+    const defaultTags = defaultArgs.map((item: any) => ({id: item, label: item}));
+    
     const [selected, setSelected] = useState<string[]>(defaultArgs);
     const [newTag, setNewTag] = useState<string>('');
     const [tags, setTags] = useState<{ id: string; label: string }[]>(defaultTags);
@@ -63,7 +66,10 @@ const FieldTags = (field: { data: any; }) => {
                     ))}
                 </TagsTrigger>
                 <TagsContent>
-                    <TagsInput name={data.id} onValueChange={setNewTag} placeholder={placeholder}/>
+                    <TagsInput
+                        name={'field_tags_' + data.id}
+                        onValueChange={setNewTag}
+                        placeholder={placeholder}/>
                     <TagsList>
                         <TagsEmpty>
                             <button

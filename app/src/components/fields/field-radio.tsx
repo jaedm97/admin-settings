@@ -23,7 +23,7 @@ export function FieldRadio(field: { data: any; }) {
             <input type="hidden" name={data.id} value={selectedValue}/>
 
             <RadioGroup
-                name={'field_switch_' + data.id}
+                name={'field_radio_' + data.id}
                 value={selectedValue}
                 onValueChange={setSelectedValue}
                 id={data.id}

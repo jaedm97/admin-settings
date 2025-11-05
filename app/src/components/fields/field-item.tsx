@@ -54,7 +54,7 @@ export function FieldItem(props: { fieldData?: any }) {
             </div>
 
             <div className="w-[50%] field text-right">
-                <div className="field-item mb-2 flex justify-end">
+                <div className={'field-item mb-2 flex justify-end field-type-' + data.type}>
                     {data.type === 'text' || data.type === 'number' || data.type === 'email' || data.type === 'password' ?
                         (
                             <Input
