@@ -14,32 +14,40 @@ export function FieldRadio(field: { data: any; }) {
         return Object.entries(data.options ?? {}) as [string, string][];
     }, [data.options]);
 
-    let initialValue = data.value ?? '';
-
-    if (typeof initialValue === "undefined" || initialValue === null || initialValue === '') {
-        initialValue = data.default ?? '';
-    }
+    const initialValue = data.value !== undefined ? data.value : (data.default ?? '');
 
     const [selectedValue, setSelectedValue] = useState(initialValue);
 
     return (
         <>
+            <input type="hidden" name={data.id} value={selectedValue}/>
+
             <RadioGroup
+                name={'field_switch_' + data.id}
                 value={selectedValue}
                 onValueChange={setSelectedValue}
-                name={data.id}
                 id={data.id}
             >
                 {
                     options.map(([key, label]) => (
-                        <div key={key} className="flex items-center gap-3">
-                            <RadioGroupItem value={key} id={key}/>
-                            <Label className="cursor-pointer" htmlFor={key}>{label}</Label>
+                        <div
+                            key={key}
+                            className="flex items-center gap-3"
+                        >
+                            <RadioGroupItem
+                                id={data.id + '_' + key}
+                                value={key}
+                            />
+                            <Label
+                                className="cursor-pointer"
+                                htmlFor={data.id + '_' + key}
+                            >
+                                {label}
+                            </Label>
                         </div>
                     ))
                 }
             </RadioGroup>
-            <input type="hidden" name={data.id} value={selectedValue}/>
         </>
     )
 }

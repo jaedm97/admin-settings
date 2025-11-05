@@ -105,7 +105,7 @@ if ( ! class_exists( 'WPReactPanel' ) ) {
 					'settingsApiUrl' => get_rest_url( false, "wp-react-panel/v1/{$this->page_slug}/update" ),
 				)
 			);
-			wp_enqueue_script( "{$this->page_slug}-settings-app", $this->plugin_url . 'wp-react-panel/build/static/js/index.js', array( 'wp-element' ), $this->plugin_version, true );
+			wp_enqueue_script( "{$this->page_slug}-settings-app", $this->plugin_url . 'wp-react-panel/build/static/js/index.js', array(), $this->plugin_version, true );
 			wp_localize_script( "{$this->page_slug}-settings-app", 'reactData', $localize_data );
 		}
 

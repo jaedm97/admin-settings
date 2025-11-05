@@ -11,11 +11,7 @@ export function FieldCheckbox(field: { data: any; }) {
         return Object.entries(data.options ?? {}) as [string, string][];
     }, [data.options]);
 
-    let initialValue = data.value ?? '';
-
-    if (typeof initialValue === "undefined" || initialValue === null || initialValue === '') {
-        initialValue = data.default ?? '';
-    }
+    const initialValue = data.value !== undefined ? data.value : (data.default ?? '');
 
     // Convert initial value to array if it's a string
     const initialChecked = initialValue ? (Array.isArray(initialValue) ? initialValue : initialValue.split(',')) : [];
@@ -36,11 +32,11 @@ export function FieldCheckbox(field: { data: any; }) {
                 options.map(([key, label]) => (
                     <div key={key} className="flex items-center gap-3 mb-2">
                         <Checkbox
-                            id={key}
+                            id={data.id + '_' + key}
                             checked={checkedValues.includes(key)}
                             onCheckedChange={(checked) => handleCheckedChange(key, checked as boolean)}
                         />
-                        <Label className="cursor-pointer" htmlFor={key}>{label}</Label>
+                        <Label className="cursor-pointer" htmlFor={data.id + '_' + key}>{label}</Label>
                     </div>
                 ))
             }

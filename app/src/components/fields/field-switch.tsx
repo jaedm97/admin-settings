@@ -6,17 +6,21 @@ import {useState} from "react";
 export function FieldSwitch(field: { data: any; }) {
     let data = field.data;
 
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(data.value === 'on');
+
+    const handleChange = (value: boolean) => {
+        setChecked(value);
+    };
 
     return (
         <>
+            <input type="hidden" name={data.id} value={checked ? 'on' : 'off'}/>
             <Switch
-                name={data.id}
+                name={'field_switch_' + data.id}
                 id={data.id}
                 checked={checked}
-                onCheckedChange={setChecked}
+                onCheckedChange={handleChange}
             />
-            <input type="hidden" name={data.id} value={checked ? "on" : "off"}/>
         </>
     )
 }
