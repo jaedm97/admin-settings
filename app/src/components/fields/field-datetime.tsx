@@ -16,16 +16,69 @@ export function FieldDatetime(field: { data: any; }) {
     let data = field.data,
         settings = data.settings ?? {};
 
+    // Parse initial value
+    const parseInitialValue = () => {
+        let initialValue = data.value ?? '';
+
+        if (typeof initialValue === "undefined" || initialValue === null || initialValue === '') {
+            initialValue = data.default ?? '';
+        }
+
+        if (!initialValue) {
+            // Set current date and time as default
+            const now = new Date();
+            return {
+                date: now,
+                time: now.toTimeString().split(' ')[0] // HH:MM:SS format
+            };
+        }
+
+        try {
+            // Handle datetime string (YYYY-MM-DD HH:MM:SS or ISO format)
+            if (initialValue.includes(' ')) {
+                const [datePart, timePart] = initialValue.split(' ');
+                return {
+                    date: new Date(datePart),
+                    time: timePart || "10:30:00"
+                };
+            } else if (initialValue.includes('T')) {
+                // ISO format
+                const dateObj = new Date(initialValue);
+                return {
+                    date: dateObj,
+                    time: dateObj.toTimeString().split(' ')[0]
+                };
+            } else {
+                // Just date
+                return {
+                    date: new Date(initialValue),
+                    time: "10:30:00"
+                };
+            }
+        } catch (error) {
+            const now = new Date();
+            return {
+                date: now,
+                time: now.toTimeString().split(' ')[0]
+            };
+        }
+    };
+
+    const initialValues = parseInitialValue();
+
     const [open, setOpen] = React.useState(false)
-    const [date, setDate] = React.useState<Date | undefined>(undefined)
-    const [time, setTime] = React.useState<string>("10:30:00")
+    const [date, setDate] = React.useState<Date | undefined>(initialValues.date)
+    const [time, setTime] = React.useState<string>(initialValues.time)
 
     const formatDateForInput = (date: Date | undefined) => {
         if (!date) return "";
-        return date.toISOString().split('T')[0];
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 
-    // Combine date and time into ISO string if needed
+    // Combine date and time into the appropriate format
     const getDateTimeValue = () => {
         if (!date) return "";
         if (settings.timePicker) {
@@ -39,8 +92,12 @@ export function FieldDatetime(field: { data: any; }) {
             <div className="flex flex-col gap-3">
                 <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
-                        <Button variant="outline" id={`date-picker-${data.id}`} className="w-auto justify-between font-normal hover:bg-white">
-                            {date ? date.toLocaleDateString() : data.placeholder}
+                        <Button
+                            variant="outline"
+                            id={`date-picker-${data.id}`}
+                            className="w-auto justify-between font-normal hover:bg-white"
+                        >
+                            {date ? date.toLocaleDateString() : data.placeholder || "Pick a date"}
                             <ChevronDownIcon/>
                         </Button>
                     </PopoverTrigger>
@@ -59,23 +116,19 @@ export function FieldDatetime(field: { data: any; }) {
                 <input type="hidden" name={data.id} value={getDateTimeValue()}/>
             </div>
             {
-                settings.timePicker && settings.timePicker
-                    ? (
-                        <div className="flex flex-col gap-3">
-                            <Input
-                                type="time"
-                                id={`time-picker-${data.id}`}
-                                name={`${data.id}_time`}
-                                step="1"
-                                value={time}
-                                onChange={(e) => setTime(e.target.value)}
-                                className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                            />
-                        </div>
-                    )
-                    : <></>
+                settings.timePicker && (
+                    <div className="flex flex-col gap-3">
+                        <Input
+                            type="time"
+                            id={`time-picker-${data.id}`}
+                            step="1"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                            className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                        />
+                    </div>
+                )
             }
-
         </div>
     )
 }
